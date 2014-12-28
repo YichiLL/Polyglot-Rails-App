@@ -6,5 +6,7 @@
 # We make no guarantees that this code is fit for any purpose. 
 # Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
 #---
-module ProductsHelper
+require 'test_helper'
+
+class ProductsHelperTest < ActionView::TestCase
 end
