@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
+
+  concern :paginatable do
+    get '(page/:page)', :action => :index, :on => :collection, :as => ''
+  end
+
   get 'store/index'
 
-  resources :products
+  resources :products, :concerns => :paginatable
   root 'store#index', as: 'store'
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
