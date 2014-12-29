@@ -29,6 +29,8 @@ gem 'draper'
 # theme https://github.com/amatsuda/kaminari_themes
 gem 'kaminari'
 
+gem 'redis'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

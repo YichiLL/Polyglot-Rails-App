@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+    check_session
     if params[:page]
       @products = Product.page(params[:page])
     else
@@ -73,10 +74,19 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
+      check_session
       @product = Product.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white
+  def check_session
+    @userid||=1
+    @session=RedisSession.new(@userid)
+    if @session.check_and_reset_expiration
+      redirect_to store_url, notice: 'Your session has expired. Restarting your session.'
+    end
+  end
+
+  # Never trust parameters from the scary internet, only allow the white
     # list through.
     def product_params
       params.require(:product).permit(:title, :description, :image_url, :price)
