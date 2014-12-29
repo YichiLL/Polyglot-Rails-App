@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # decorator
 gem 'draper'
 # pagination https://github.com/amatsuda/kaminari
+# theme https://github.com/amatsuda/kaminari_themes
 gem 'kaminari'
 
 # Use ActiveModel has_secure_password

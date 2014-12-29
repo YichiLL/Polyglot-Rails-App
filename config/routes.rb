@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :line_items
+
+  resources :carts
+
   concern :paginatable do
     get '(page/:page)', :action => :index, :on => :collection, :as => ''
   end
