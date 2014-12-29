@@ -4,9 +4,11 @@ module CurrentCart
   private
 
   def set_cart
-    @cart = Cart.find(session[:cart_id])
-  rescue ActiveRecord::RecordNotFound
-    @cart = Cart.create
-    session[:cart_id] = @cart.id
+    @userid||=1
+    @session=RedisSession.new(@userid)
+    if @session.check_and_reset_expiration
+      redirect_to store_url, notice: 'Your session has expired. Restarting your session.'
+    end
+    @cart=@session.cart
   end
 end

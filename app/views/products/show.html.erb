@@ -2,7 +2,7 @@
 <% if notice %>
     <p id="notice"><%= notice %></p>
 <% end %>
-
+<% @session.inc_product_view(@product.id) %>
 <p>
   <strong>Title:</strong>
   <%= @product.title %>
@@ -25,3 +25,7 @@
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
+
+<p>For development only, view counts: <%=  @session.get_all_products.to_json %></p>
+
+<%= link_to 'Logout', user_logout_url(@session.userid) %>

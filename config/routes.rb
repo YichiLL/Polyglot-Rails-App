@@ -4,6 +4,11 @@ Rails.application.routes.draw do
 
   resources :carts
 
+  get '/session/:userid', to: 'redis_sessions#index', as: "user_session"
+  get '/session/:userid/logout', to: 'redis_sessions#logout', as: "user_logout"
+  get '/session/:userid/expired', to: 'redis_sessions#expired', as: "user_expired"
+  get '/session/:userid/cart', to: 'redis_sessions#get_cart', as: "user_cart"
+
   concern :paginatable do
     get '(page/:page)', :action => :index, :on => :collection, :as => ''
   end
