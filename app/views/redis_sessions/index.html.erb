@@ -1,0 +1,33 @@
+<% if notice %>
+    <p id="notice"><%= notice %></p>
+<% end %>
+<% redis=RedisSession::REDIS %>
+
+<% if redis.exists @userid  %>
+    <h1>Session Info for session with id of <%= "#{@userid}" %></h1>
+    <h2>Time to expire</h2>
+    <p><% ttl = redis.ttl(@userid)  %>
+      <% if ttl<0 %>
+          <%= "Expired." %>
+      <% else %>
+          <%= ttl %> s.
+            <h2>View History</h2>
+          <% view_hist = redis.hgetall("#{@userid}:products") %>
+          <table>
+            <tr><td>| Product id |</td><td>| Views |</td></tr>
+            <% view_hist.each do |key|  %>
+                <tr>
+                  <td><%= key[0].to_i %> </td>
+                  <td><%= key[1].to_i %> </td>
+                </tr>
+            <% end  %>
+          </table>
+
+      <% end %>
+    </p>
+
+
+
+<% else  %>
+    <h1>Session with id of <%= "#{@userid}" %>  not found or expired.</h1>
+<% end  %>

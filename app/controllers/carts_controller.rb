@@ -1,6 +1,9 @@
 class CartsController < ApplicationController
+
+
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+
   # GET /carts
   # GET /carts.json
   def index
@@ -54,8 +57,7 @@ class CartsController < ApplicationController
   # DELETE /carts/1
   # DELETE /carts/1.json
   def destroy
-    @cart.destroy if @cart.id == session[:cart_id]
-    session[:cart_id] = nil
+    @cart.destroy
     respond_to do |format|
       format.html { redirect_to store_url,
                                 notice: 'Your cart is currently empty' }
@@ -68,6 +70,12 @@ class CartsController < ApplicationController
   # ...
 
   def set_cart
+    @userid||=1
+    @session=RedisSession.new(@userid)
+    if @session.check_and_reset_expiration
+      redirect_to store_url, notice: 'Your session has expired. Restarting your session.'
+      return
+    end
     @cart = Cart.find(params[:id])
   end
 

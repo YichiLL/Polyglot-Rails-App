@@ -4,7 +4,7 @@
 <% end %>
 
 
-<h2>Your Cart</h2>
+<h2>Cart #<%= @cart.id %></h2>
 <table>
   <% @cart.line_items.each do |item| %>
       <tr>

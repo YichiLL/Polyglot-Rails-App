@@ -1,0 +1,2 @@
+module RedisSessionsHelper
+end
